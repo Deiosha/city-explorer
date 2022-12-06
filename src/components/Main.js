@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import map from '../components/images/map.png'
+import Alert from 'react-bootstrap/Alert';
 // src/components/images/map.png
 const ACCESS_KEY = process.env.REACT_APP_LOCATION_API_KEY;
 
@@ -48,6 +49,9 @@ class Main extends React.Component {
         <form onSubmit={this.cityData}>
           <label>City</label>
           <input onChange={this.handleLocationSearch} type="text" name="search" placeholder="Enter City here" />
+          <Alert >
+          This is a {} alert—check it out!
+        </Alert>
           <button type="submit">Explore</button>
         </form>
         city={this.state.location}
