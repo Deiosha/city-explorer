@@ -14,9 +14,23 @@ code {
 }
 
 h1 {
-  color: aliceblue;
+  background-color: rgb(37, 80, 109);
+  padding-bottom: 30px;
 }
 
-images {
-  background-position: 50px;
+form {
+  text-align: center;
+}
+
+text {
+  text-align: center;
+}
+
+div {
+  background-color: rgb(37, 80, 109);
+  color:white;
+  font-size: large;
+  text-align: center;
+ 
+
 }
