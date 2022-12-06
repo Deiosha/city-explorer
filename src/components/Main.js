@@ -1,6 +1,9 @@
 import axios from 'axios';
 import React from 'react';
+import map from '../components/images/map.png'
+// src/components/images/map.png
 const ACCESS_KEY = process.env.REACT_APP_LOCATION_API_KEY;
+
 
 class Main extends React.Component {
   constructor() {
@@ -31,6 +34,7 @@ class Main extends React.Component {
       location: response.data[0].display_name,
       latitude: response.data[0].lat,
       longitude: response.data[0].lon,
+      locationData: response.data[0],
       // displayMap: true,
       // displayError: false
     });
@@ -40,20 +44,26 @@ class Main extends React.Component {
 
   render() {
     return (
-      <><div id="city-search">
+      <div id="city-search">
         <form onSubmit={this.cityData}>
           <label>City</label>
           <input onChange={this.handleLocationSearch} type="text" name="search" placeholder="Enter City here" />
           <button type="submit">Explore</button>
         </form>
-      </div><section>
-          city={this.state.location}
+        city={this.state.location}
           lat={this.state.latitude}
           lon={this.state.longitude}
-        </section></>
+          {this.state.locationSearch && this.state.locationData
+            ? <div id="map"><img src={map} alt="location map" /></div>
+            : null
+          }
+      </div>
+        
+        
+       
     )
   }
-
 }
+
 
 export default Main;
