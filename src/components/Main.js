@@ -12,6 +12,7 @@ class Main extends React.Component {
   constructor() {
     super();
     this.state = {
+      location: null,
       locationSearch: '',
       error: null,
     }
@@ -44,6 +45,7 @@ class Main extends React.Component {
         locationData: response.data[0],
         // displayMap: true,
         // displayError: false
+        
       });
     } catch (err) {
       console.log('error happened');
@@ -53,6 +55,7 @@ class Main extends React.Component {
   }
   weatherData = async (lat, lon) => {
     try{
+      console.log(this.state);
       let weather = await axios.get(`http://localhost:3001/weather?searchQuery=${this.state.location}`);
       console.log(weather);
       this.setState({
