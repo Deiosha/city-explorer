@@ -3,6 +3,7 @@ import React from 'react';
 import map from '../components/images/map.png'
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
+import Weather from './Weather';
 // src/components/images/map.png
 const ACCESS_KEY = process.env.REACT_APP_LOCATION_API_KEY;
 
@@ -22,7 +23,7 @@ class Main extends React.Component {
       locationSearch: event.target.value
 
     });
-    console.log(this.state.locationSearch);
+    console.log(this.state);
 
   }
 
@@ -32,10 +33,12 @@ class Main extends React.Component {
 
     try {
       let response = await axios.get(url);
-      console.log(response.data[0].lat);
+      console.log(response.data[0].display_name);
+      let city = response.data[0].display_name.split(',')
+      console.log(city);
 
       this.setState({
-        location: response.data[0].display_name,
+        location: city[0],
         latitude: response.data[0].lat,
         longitude: response.data[0].lon,
         locationData: response.data[0],
@@ -46,7 +49,23 @@ class Main extends React.Component {
       console.log('error happened');
       this.setState({error: err.response.data})
     }
+    this.weatherData(this.state.latitude, this.state.longitude);
   }
+  weatherData = async (lat, lon) => {
+    try{
+      let weather = await axios.get(`http://localhost:3001/weather?searchQuery=${this.state.locationData}`);
+      console.log(weather);
+      this.setState({
+        weather: weather.data
+      })
+      
+      
+      
+    } catch(err){
+      console.log('err', err);
+    }
+  }
+  // console.log(this.state);
 handleError = () => {
   this.setState({error: null});
 }
@@ -72,6 +91,7 @@ handleError = () => {
           ? <div id="map"><img src={map} alt="location map" /></div>
           : null
         }
+        <Weather />
       </div>
 
 
