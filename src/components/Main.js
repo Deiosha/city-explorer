@@ -3,7 +3,7 @@ import React from 'react';
 import map from '../components/images/map.png'
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
-import Weather from './Weather';
+// import Weather from './Weather';
 // src/components/images/map.png
 const ACCESS_KEY = process.env.REACT_APP_LOCATION_API_KEY;
 
@@ -53,7 +53,7 @@ class Main extends React.Component {
   }
   weatherData = async (lat, lon) => {
     try{
-      let weather = await axios.get(`http://localhost:3001/weather?searchQuery=${this.state.locationData}`);
+      let weather = await axios.get(`http://localhost:3001/weather?searchQuery=${this.state.location}`);
       console.log(weather);
       this.setState({
         weather: weather.data
@@ -91,7 +91,7 @@ handleError = () => {
           ? <div id="map"><img src={map} alt="location map" /></div>
           : null
         }
-        <Weather />
+        {/* <Weather /> */}
       </div>
 
 
