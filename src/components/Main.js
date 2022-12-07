@@ -45,25 +45,27 @@ class Main extends React.Component {
         locationData: response.data[0],
         // displayMap: true,
         // displayError: false
-        
-      });
+
+      }, () => this.weatherData(response.data[0].lat, response.data[0].lon));
     } catch (err) {
       console.log('error happened');
       this.setState({error: err.response.data})
     }
-    this.weatherData(this.state.latitude, this.state.longitude);
+    // console.log(this.state);
+    // this is a problem! State needs to be set before we make the request, and state is unfortunately not set yet;
+    // this.weatherData(response.data[0].lat, this.state.longitude);
   }
   weatherData = async (lat, lon) => {
     try{
-      console.log(this.state);
-      let weather = await axios.get(`http://localhost:3001/weather?searchQuery=${this.state.location}`);
-      console.log(weather);
+      // console.log(this.state);
+      let weather = await axios.get(`http://localhost:3001/weather?searchQuery=${this.state.location}&lat=${lat}&lon=${lon}`);
+      // console.log(weather);
       this.setState({
         weather: weather.data
-      })
-      
-      
-      
+      });
+
+
+
     } catch(err){
       console.log('err', err);
     }
@@ -74,6 +76,7 @@ handleError = () => {
 }
 
   render() {
+    console.log(this.state.weather);
     return (
       <div id="city-search">
         <form onSubmit={this.cityData}>
