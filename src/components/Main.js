@@ -4,7 +4,7 @@ import map from '../components/images/map.png'
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Weather from './Weather';
-import Stack from 'react-bootstrap/Stack';
+// import Stack from 'react-bootstrap/Stack';
 
 // import Weather from './Weather';
 // src/components/images/map.png
