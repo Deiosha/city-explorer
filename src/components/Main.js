@@ -3,6 +3,9 @@ import React from 'react';
 import map from '../components/images/map.png'
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
+import Weather from './Weather';
+import Stack from 'react-bootstrap/Stack';
+
 // import Weather from './Weather';
 // src/components/images/map.png
 const ACCESS_KEY = process.env.REACT_APP_LOCATION_API_KEY;
@@ -64,8 +67,6 @@ class Main extends React.Component {
         weather: weather.data
       });
 
-
-
     } catch(err){
       console.log('err', err);
     }
@@ -89,6 +90,7 @@ handleError = () => {
           {JSON.stringify(this.state.error)}<Button onClick={this.handleError}>Thank you!</Button></Alert>
           : null
         }
+        
 
         city= {this.state.location}
         lat= {this.state.latitude}
@@ -97,7 +99,10 @@ handleError = () => {
           ? <div id="map"><img src={map} alt="location map" /></div>
           : null
         }
-        {/* <Weather /> */}
+        {this.state.weather?
+        <Weather weatherData = {this.state.weather}/>
+        : null
+        }
       </div>
 
 
