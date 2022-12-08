@@ -18,6 +18,7 @@ class Main extends React.Component {
       location: null,
       locationSearch: '',
       error: null,
+      weather: []
     }
   }
 
@@ -93,9 +94,9 @@ handleError = () => {
         }
         
 
-        city= {this.state.location}
-        lat= {this.state.latitude}
-        lon= {this.state.longitude}
+        city = {this.state.location}
+        lat = {this.state.latitude}
+        lon = {this.state.longitude}
         {this.state.locationSearch && this.state.locationData
           ? <div id="map"><img src={map} alt="location map" /></div>
           : null
