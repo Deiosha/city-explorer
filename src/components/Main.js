@@ -80,7 +80,7 @@ class Main extends React.Component {
 
   movieData = async () => {
     console.log(process.env.REACT_APP_LOCAL);
-    let movieData = await axios.get(`${process.env.REACT_APP_LOCAL}/movie?searchQuery=${this.state.locationSearch}`);
+    let movieData = await axios.get(`${process.env.REACT_APP_LOCAL}/movies?searchQuery=${this.state.locationSearch}`);
     console.log(movieData);
     this.setState({
       movies: movieData.data
