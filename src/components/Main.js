@@ -114,8 +114,8 @@ class Main extends React.Component {
           }
 
           <p>City = {this.state.location}</p>
-          <p>Lat = {this.state.latitude}</p>
-          <p>Lon = {this.state.longitude}</p>
+          <p>Latitude = {this.state.latitude}</p>
+          <p>Longitude = {this.state.longitude}</p>
 
           {this.state.locationSearch && this.state.locationData
             ? <div id="map"><img src={map} alt="location map" /></div>
