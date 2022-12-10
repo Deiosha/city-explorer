@@ -1,5 +1,5 @@
 import React from 'react';
-import Stack from 'react-bootstrap/Stack';
+import WeatherDay from './WeatherDay';
 
 class Weather extends React.Component {
   
@@ -8,12 +8,7 @@ render() {
       <div>
       {this.props.weatherData.map((day, i) => {
         return (
-          <div key={i}>
-          <Stack direction='horizontal' gap={3}>
-          <p>Date: {day.date}</p>
-          <p>Description: {day.description}</p>
-          </Stack>
-          </div>
+          <WeatherDay day={day} key={i} />
         )
       })}
       </div>

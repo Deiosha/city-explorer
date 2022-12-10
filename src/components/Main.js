@@ -4,7 +4,7 @@ import map from '../components/images/map.png'
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Weather from './Weather';
-import Movie from "./Movie";
+import Movie from "./Movies";
 
 // import Stack from 'react-bootstrap/Stack';
 
@@ -53,15 +53,22 @@ class Main extends React.Component {
         // displayMap: true,
         // displayError: false
 
-      }, () => this.weatherData(response.data[0].lat, response.data[0].lon), this.movieData());
+      }, this.callApi);
     } catch (err) {
       console.log('error happened');
       this.setState({ error: err.response.data })
     }
+
+
     // console.log(this.state);
     // this is a problem! State needs to be set before we make the request, and state is unfortunately not set yet;
     // this.weatherData(response.data[0].lat, this.state.longitude);
   }
+  callApi = async () => {
+    await this.weatherData(this.state.latitude, this.state.longitude)
+    await this.movieData()
+  }
+
   weatherData = async (lat, lon) => {
     try {
       // console.log(this.state);
@@ -79,62 +86,66 @@ class Main extends React.Component {
   }
 
   movieData = async () => {
-    console.log(process.env.REACT_APP_LOCAL);
-    let movieData = await axios.get(`${process.env.REACT_APP_LOCAL}/movies?searchQuery=${this.state.locationSearch}`);
-    console.log(movieData);
-    this.setState({
-      movies: movieData.data
-    })
-  }
-  
-
-    // console.log(this.state);
-    handleError = () => {
-      this.setState({ error: null });
-    }
-
-
-    render() {
-      console.log(this.state.movies);
-      return (
-        <div id="city-search">
-          <form onSubmit={this.cityData}>
-            <label>City</label>
-            <input onChange={this.handleLocationSearch} type="text" name="search" placeholder="Enter City here" />
-            <button type="submit">Explore</button>
-          </form>
-          {this.state.error
-            ? <Alert>
-              {JSON.stringify(this.state.error)}<Button onClick={this.handleError}>Thank you!</Button></Alert>
-            : null
-          }
-          {this.state.weather ?
-            <Weather weatherData={this.state.weather} />
-            : null
-          }
-
-          <p>City = {this.state.location}</p>
-          <p>Latitude = {this.state.latitude}</p>
-          <p>Longitude = {this.state.longitude}</p>
-
-          {this.state.locationSearch && this.state.locationData
-            ? <div id="map"><img src={map} alt="location map" /></div>
-            : null
-          }
-          
-          {this.state.movies ? this.state.movies.length > 0 && this.state.movies.map(movie => <Movie movie={movie} />
-          ) : <p>movie goes here</p>
-          }
-          {/* <Movie movie={this.state.movies}/> */}
-
-
-        </div>
-
-
-
-      )
+    try {
+      let movieData = await axios.get(`${process.env.REACT_APP_LOCAL}/movies?searchQuery=${this.state.locationSearch}`);
+      console.log(movieData);
+      this.setState({
+        movies: movieData.data
+      })
+      
+    } catch (error) {
+      console.log('error for movieData');
     }
   }
+
+
+  // console.log(this.state);
+  handleError = () => {
+    this.setState({ error: null });
+  }
+
+
+  render() {
+    console.log(this.state.movies);
+    return (
+      <div id="city-search">
+        <form onSubmit={this.cityData}>
+          <label>City</label>
+          <input onChange={this.handleLocationSearch} type="text" name="search" placeholder="Enter City here" />
+          <button type="submit">Explore</button>
+        </form>
+        {this.state.error
+          ? <Alert>
+            {JSON.stringify(this.state.error)}<Button onClick={this.handleError}>Thank you!</Button></Alert>
+          : null
+        }
+        {this.state.weather ?
+          <Weather weatherData={this.state.weather} />
+          : null
+        }
+
+        <p>City = {this.state.location}</p>
+        <p>Latitude = {this.state.latitude}</p>
+        <p>Longitude = {this.state.longitude}</p>
+
+        {this.state.locationSearch && this.state.locationData
+          ? <div id="map"><img src={map} alt="location map" /></div>
+          : null
+        }
+
+        {this.state.movies ? this.state.movies.length > 0 && this.state.movies.map(movie => <Movie movie={movie} />)
+          : <p>movie goes here</p>
+        }
+        {/* <Movie movie={this.state.movies}/> */}
+
+
+      </div>
+
+
+
+    )
+  }
+}
 
 
 export default Main;
